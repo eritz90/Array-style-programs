@@ -1,0 +1,115 @@
+public class Minesweeper {
+    public static void main(String[] args) {
+        int n = Integer.parseInt(args[0]);
+        int m = Integer.parseInt(args[1]);
+        int k = Integer.parseInt(args[2]);
+        int mine = 9;
+        int[][] array = new int[n][m];
+
+        // choose k random numbers
+
+        for (int i = 0; i < k; i++) {
+            int r = (int) (n * Math.random());
+            int r2 = (int) (m * Math.random());
+
+            // re random again if array[r][x] is already = 1;
+            if (array[r][r2] == mine) {
+                while (true) {
+                    int r3 = (int) (n * Math.random());
+                    int r4 = (int) (m * Math.random());
+                    if (array[r3][r4] == 0) {
+                        array[r3][r4] = mine;
+                        break;
+                    }
+                }
+            } else array[r][r2] = mine;
+        }
+
+        // check all x blocks and 1's around it
+        // m = row ;  n = column
+        //      m--
+        //   n-- x n++
+        //      m++
+        //
+        // by x[m--][n]  restrict row 0;
+        //    x[m++][n]  restrict last row;
+        //    x[m][n--]  restrict column 0;
+        //    x[m][n++]  restrict last column;
+        //
+        // diagonal
+        // by
+        //  m-- n--   m-- n++
+        //          x
+        //  m++ n--   m++ n++
+        //
+        // by x[m--][n--] restrict row 0 & column 0;
+        //    x[m--][n++] restrict row 0 & last column 0;
+        //    x[m++][n--] restrict last row & first column;
+        //    x[m++][n++] restrict last row & last column;
+        // real array[n][m]
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (array[i][j] != mine) {
+                    // real array[n][m]
+                    if (i != 0) {
+                        if (array[i - 1][j] == mine) {
+                            array[i][j]++;
+                        }
+                    }
+
+                    if (i != n - 1) {
+                        if (array[i + 1][j] == mine) {
+                            array[i][j]++;
+                        }
+                    }
+
+                    if (j != 0) {
+                        if (array[i][j - 1] == mine) {
+                            array[i][j]++;
+                        }
+                    }
+
+                    if (j != m - 1) {
+                        if (array[i][j + 1] == mine) {
+                            array[i][j]++;
+                        }
+
+                    }
+                    if ((i != 0) && j != 0) {
+                        if (array[i - 1][j - 1] == mine) {
+                            array[i][j]++;
+                        }
+                    }
+                    if (i != 0 && j != m - 1) {
+                        if (array[i - 1][j + 1] == mine) {
+                            array[i][j]++;
+                        }
+                    }
+                    if (i != n - 1 && j != 0) {
+                        if (array[i + 1][j - 1] == mine) {
+                            array[i][j]++;
+                        }
+                    }
+                    if (i != n - 1 && j != m - 1) {
+                        if (array[i + 1][j + 1] == mine) {
+                            array[i][j]++;
+                        }
+                    }
+                }
+            }
+        }
+
+        // output whole block
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (array[i][j] == 0) System.out.print("0  ");
+                else if (array[i][j] == mine) System.out.print("*  ");
+                else System.out.print(array[i][j] + "  ");
+            }
+            System.out.println();
+            // test
+        }
+    }
+}
+
+
