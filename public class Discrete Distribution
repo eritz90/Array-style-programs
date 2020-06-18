@@ -1,0 +1,63 @@
+public class DiscreteDistribution {
+    public static void main(String[] args) {
+        // m = sum
+        int m = Integer.parseInt(args[0]);
+        // build i's
+        int n = args.length;
+        int[] array = new int[n];
+        // fill up i's after m
+        for (int i = 1; i < n; i++) {
+            array[i] = Integer.parseInt(args[i]);
+        }
+
+        // calculate sum
+        int total = 0;
+        for (int i = 1; i < n; i++) {
+            total += array[i];
+
+        }
+
+        // arrange cumulative sums
+        for (int i = 2; i < n; i++) {
+            array[i] += array[i - 1];
+        }
+        /* check arrangement
+        for (int i = 1; i < n; i++) {
+            System.out.println(array[i]);
+        }
+        */
+
+        // print m amounts of i's that are = to sum
+        // print n or args.length by
+        //
+        // choosing if random is < array[0] then 1
+        // choosing if random is < array[1] then 2
+        // choosing if random is < array[2] then 3
+        // algo that gets a random then checks
+
+
+        int[] printArray = new int[m + 1];
+
+
+        for (int i = 1; i < m + 1; i++) {
+            int random = (int) (total * Math.random());
+            int sum = 0;
+            // System.out.println("random num in: " + i + " is " + random + " ");
+            for (int x = 1; x < n; x++) {
+                sum = array[x];
+                if (random <= sum) {
+                    printArray[i] = x;
+                    break;
+                }
+            }
+            // System.out.println("printArray " + i + " is " + printArray[i]);
+        }
+        // print all i's
+        for (int i = 1; i < m + 1; i++) {
+            System.out.print(printArray[i] + " ");
+            if ((i % 25) == 0) System.out.println();
+        }
+
+
+    }
+}
