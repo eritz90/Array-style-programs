@@ -1,3 +1,3 @@
 # Minesweeper
-A array program practice required from a Coursera course namely, Computer Science: Programming with a purpose
-This is a test
+Array program practices required from a course. All programs are written in Java.
+
